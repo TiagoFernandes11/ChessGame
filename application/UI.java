@@ -43,11 +43,9 @@ public class UI {
             char column = s.charAt(0);
             int row = Integer.parseInt(s.substring(1));
             return new ChessPosition(column, row);
-        } 
-        catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             throw new InputMismatchException("Error reading ChessPosition");
         }
-
 
     }
 
@@ -58,8 +56,11 @@ public class UI {
         System.out.println();
         System.out.println("Turn: " + chessMatch.getTurn());
         System.out.println("Wainting player: " + chessMatch.getCurrentPlayer());
-    }
+        if (chessMatch.getCheck()) {
+            System.out.println("CHECK!");
+        }
 
+    }
 
     public static void printBoard(ChessPiece[][] pieces) {
         for (int i = 0; i < pieces.length; i++) {
@@ -84,7 +85,7 @@ public class UI {
     }
 
     public static void printPiece(ChessPiece piece, boolean background) {
-        if(background){
+        if (background) {
             System.out.print(ANSI_BLUE_BACKGROUND);
         }
         if (piece == null) {
@@ -99,9 +100,11 @@ public class UI {
         System.out.print("  ");
     }
 
-    private static void printCapturedPieces(List<ChessPiece> captured){
-        List<ChessPiece> white = captured.stream().filter(x -> x.getColor() == Color.WHITE).collect(Collectors.toList());
-        List<ChessPiece> black = captured.stream().filter(x -> x.getColor() == Color.BLACK).collect(Collectors.toList());
+    private static void printCapturedPieces(List<ChessPiece> captured) {
+        List<ChessPiece> white = captured.stream().filter(x -> x.getColor() == Color.WHITE)
+                .collect(Collectors.toList());
+        List<ChessPiece> black = captured.stream().filter(x -> x.getColor() == Color.BLACK)
+                .collect(Collectors.toList());
         System.out.println("Captured pieces: ");
         System.out.print("White: ");
         System.out.print(ANSI_WHITE);
